@@ -1,0 +1,64 @@
+<div class="bg-background py-5 px-8 h-dvh w-dvw overflow-auto">
+
+    <!-- Hearder -->
+    <header class="header flex justify-between flex-wrap items-center">
+        <div class="w-fit">
+            <div class="flex gap-3 cursor-pointer">
+                <span nz-icon nzType="ng-zorro:user_circle" class="!text-[30px]" nzTheme="outline"></span>
+                <h1 class="text-[#181B22] text-start text-[28px] mb-0 font-semibold ">Quản lý khách hàng</h1>
+            </div>
+            <div class="mt-6 flex items-center gap-8">
+                <input nz-input placeholder="Tên, SDT, Email" nzSize="default" />
+                <span nz-icon nzType="ng-zorro:sort_circle" class="!text-[36px]" nzTheme="outline"></span>
+            </div>
+        </div>
+        <div class="w-fit  text-sm font-semibold flex flex-col items-end gap-6">
+            <div class="flex flex-row-reverse gap-2">
+                <nz-avatar nzIcon="user" class="size-11" nzSrc="../../../assets/img/Rectangle 312.png"></nz-avatar>
+                <div class=" *:mb-0 *:text-right">
+                    <p>Mrs Conan</p>
+                    <p>Nhân viên kinh doanh</p>
+                </div>
+            </div>
+            <div class="rounded-lg py-2 px-3 w-fit bg-[#BD8306] ">
+                <span class="text-white ">Thêm khách hàng</span>
+            </div>
+        </div>
+    </header>
+    <!-- Table -->
+    <div class="max-h-[61.95dvh] h-fit overflow-auto rounded-md border-l border border-[#BDBDBD] border-solid my-5 ">
+        <table class="min-w-full w-fit  rounded-md">
+            <thead class=" sticky top-0 left-0 w-full">
+                <tr class="  *:text-left *:py-3 *:px-3  *:text-sm *:font-bold *:bg-[#F2F2F2] *:border-solid *:border-b *:border-[#BDBDBD]">
+                    <th class="w-[60px] rounded-tl-md pl-3 ">#</th>
+                    <th class="max-w-[160px]  min-w-[100px]">Mã KH</th>
+                    <th class="max-w-[160px]  min-w-[100px]">Họ và tên </th>
+                    <th class="max-w-[160px] min-w-[100px]">SĐT</th>
+                    <th class="min-w-[220px]">Email</th>
+                    <th class="max-w-[160px] min-w-[120px]">Người tiếp thị</th>
+                    <th class="max-w-[160px] min-w-[120px]">Nguồn</th>
+                    <th class="max-w-[250px] min-w-[120px]">Ghi chú</th>
+                    <th class=" min-w-[60px] rounded-tr-md w-fit">Ngày tạo</th>
+                </tr>
+            </thead>
+            <tbody class="">
+                
+                <tr *ngFor="let item of ListItem ;let i=index" class=" *:text-left *:py-3 *:text-sm *:font-semibold *:px-3  *:bg-[#FFFFFF]  *:border-solid *:border-b *:border-[#BDBDBD]">
+                    <td class="w-[60px] pl-3">{{(pageNumber-1)*pageSize +i}}</td>
+                    <td class="max-w-[160px]  min-w-[100px]">{{item?.customer_code||"" }}</td>
+                    <td class="max-w-[160px]  min-w-[100px]"><p class="line-clamp-2">{{item?.full_name||"" }}</p></td>
+                    <td class="max-w-[160px] min-w-[100px]">{{item?.phone_number||"" }}</td>
+                    <td class="min-w-[220px]"><p class="line-clamp-2">{{item?.email||"" }}</p></td>
+                    <td class="max-w-[160px] min-w-[120px]">{{userAcoutn||"" }}</td>
+                    <td class="max-w-[160px] min-w-[120px]">{{item?.source?.title||"" }}</td>
+                    <td class="max-w-[250px] min-w-[120px]"><p class="">{{item?.notes||"" }} </p></td>
+                    <td *ngIf="item?.source?.created_at" class=" min-w-[60px] w-fit">{{item?.source?.created_at| date:"dd/MM/YYYY"     }}</td>
+                    <td *ngIf="!item?.source?.created_at" class=" min-w-[60px] w-fit"></td>
+                </tr>
+               
+            </tbody>
+        </table>
+    </div>
+
+
+</div>

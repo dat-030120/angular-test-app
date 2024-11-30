@@ -1,0 +1,14 @@
+.header ::ng-deep .ant-input {
+    height: 40px; 
+    padding: 10px 16px; 
+    line-height: 1.5;
+    border-radius: 4px;
+    width: 348px; 
+    border-color: #828282; 
+    &:focus {
+       border-color: #828282; 
+       box-shadow:none
+    }
+}
+
+
