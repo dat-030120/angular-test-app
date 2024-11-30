@@ -5,7 +5,7 @@
         <div class="w-fit">
             <div class="flex gap-3 cursor-pointer">
                 <span nz-icon nzType="ng-zorro:user_circle" class="!text-[30px]" nzTheme="outline"></span>
-                <h1 class="text-[#181B22] text-start text-[28px] mb-0 font-semibold ">Quản lý khách hàng</h1>
+                <h1 class="text-[#181B22] text-start text-[28px] mb-0 font-semibold  ">Quản lý khách hàng</h1>
             </div>
             <div class="mt-6 flex items-center gap-8">
                 <input nz-input placeholder="Tên, SDT, Email" nzSize="default" />
@@ -21,7 +21,7 @@
                 </div>
             </div>
             <div class="rounded-lg py-2 px-3 w-fit bg-[#BD8306] ">
-                <span class="text-white ">Thêm khách hàng</span>
+                <span class="text-white " (click)="openCustomer()">Thêm khách hàng</span>
             </div>
         </div>
     </header>
@@ -43,8 +43,8 @@
             </thead>
             <tbody class="">
                 
-                <tr *ngFor="let item of ListItem ;let i=index" class=" *:text-left *:py-3 *:text-sm *:font-semibold *:px-3  *:bg-[#FFFFFF]  *:border-solid *:border-b *:border-[#BDBDBD]">
-                    <td class="w-[60px] pl-3">{{(pageNumber-1)*pageSize +i}}</td>
+                <tr *ngFor="let item of ListItem ;let i=index" class=" *:text-left *:py-3 *:text-sm *:font-semibold *:px-3  *:bg-[#FFFFFF]  {{i !== ListItem.length-1 ? '*:border-solid *:border-b *:border-[#BDBDBD]': '' }} ">
+                    <td class="w-[60px] pl-3">{{(pageNumber-1)*pageSize +i+1}}</td>
                     <td class="max-w-[160px]  min-w-[100px]">{{item?.customer_code||"" }}</td>
                     <td class="max-w-[160px]  min-w-[100px]"><p class="line-clamp-2">{{item?.full_name||"" }}</p></td>
                     <td class="max-w-[160px] min-w-[100px]">{{item?.phone_number||"" }}</td>
@@ -55,10 +55,38 @@
                     <td *ngIf="item?.source?.created_at" class=" min-w-[60px] w-fit">{{item?.source?.created_at| date:"dd/MM/YYYY"     }}</td>
                     <td *ngIf="!item?.source?.created_at" class=" min-w-[60px] w-fit"></td>
                 </tr>
-               
             </tbody>
         </table>
     </div>
-
+    <div class="flex justify-end pr-5 pagination gap-3">
+        <nz-select  nzPlaceHolder="Select a person" [(ngModel)]="pageSize" (ngModelChange)="restPage($event)"	>
+            <nz-option nzLabel="10/ Trang" [nzValue]="10"></nz-option>
+            <nz-option nzLabel="20/ Trang" [nzValue]="20"></nz-option>
+            <nz-option nzLabel="30/ Trang" [nzValue]="30"></nz-option>
+          </nz-select>
+        <nz-pagination  [(nzPageIndex)]="pageNumber" [nzPageSize]="pageSize"	[nzTotal]="200"  [nzItemRender]="renderItemTemplate" (nzPageIndexChange)="onPageChange($event)"></nz-pagination>
+    </div>
+   
 
 </div>
+
+
+<ng-template #renderItemTemplate let-type let-page="page">
+    @switch (type) {
+      @case ('page') {
+        <a>{{ page }}</a>
+      }
+      @case ('prev') {
+        <a><span nz-icon nzType="caret-left" nzTheme="outline"></span></a>
+      }
+      @case ('next') {
+        <a><span nz-icon nzType="caret-right" nzTheme="outline"></span></a>
+      }
+      @case ('prev_5') {
+        <a>...</a>
+      }
+      @case ('next_5') {
+        <a>...</a>
+      }
+    }
+  </ng-template>

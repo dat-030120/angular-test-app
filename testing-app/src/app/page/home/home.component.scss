@@ -1,14 +1,69 @@
 .header ::ng-deep .ant-input {
-    height: 40px; 
-    padding: 10px 16px; 
+    height: 40px;
+    padding: 10px 16px;
     line-height: 1.5;
     border-radius: 4px;
-    width: 348px; 
-    border-color: #828282; 
+    width: 348px;
+    border-color: #828282;
+
     &:focus {
-       border-color: #828282; 
-       box-shadow:none
+        border-color: #828282;
+        box-shadow: none
     }
 }
 
+::ng-deep {
 
+    .ant-pagination-item,
+    .ant-pagination-prev,
+    .ant-pagination-next,
+    .ant-pagination-jump-prev,
+    .ant-pagination-jump-next {
+        border-radius: 99px;
+        border: #BDBDBD solid 0.01px;
+        background-color: #F5F5F5;
+    }
+
+}
+
+::ng-deep {
+
+    .ant-pagination-prev:hover,
+    .ant-pagination-next:hover,
+    .ant-pagination-item:hover,
+    .ant-pagination-item-active,
+    .ant-pagination-item-active:hover,
+    .ant-pagination-item-active:hover,
+    .ant-pagination-jump-prev:hover,
+    .ant-pagination-jump-next:hover {
+        background: #F07525;
+        border: #F07525 solid 0.01px;
+
+        & a {
+            color: white;
+
+        }
+    }
+}
+
+.pagination ::ng-deep {
+    .ant-select {
+        height: 36px;
+        width: fit-content;
+        font-size: 14px;
+        padding: 0px 10px;
+
+    }
+    .ant-select-arrow {
+        right:20px
+    }
+    .ant-select-selector {
+        border-radius: 30px;
+        border: 1px solid #D9D9D9 !important;
+        padding: 0px 10px;
+        background-color:#F5F5F5 ;
+    }
+    .ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector{
+        box-shadow:none
+    }
+}

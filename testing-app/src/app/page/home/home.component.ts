@@ -1,21 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, NgModule, OnInit } from '@angular/core';
 import { NzIconModule, NzIconService } from 'ng-zorro-antd/icon';
 import { Sort_Circle, User_Circle } from '../../../assets/icon/icon';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { CommonModule } from '@angular/common';
+import { NzPaginationModule } from 'ng-zorro-antd/pagination';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { FormsModule } from '@angular/forms';
+import {  NzModalService } from 'ng-zorro-antd/modal';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { ComponentComponent } from './component/component.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NzIconModule, NzInputModule, NzAvatarModule, CommonModule],
+  imports: [NzIconModule,NzModalModule ,NzInputModule, NzAvatarModule, CommonModule,NzPaginationModule,NzSelectModule,FormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnInit {
-  constructor(private iconService: NzIconService) {
-    this.iconService.addIconLiteral('ng-zorro:user_circle', User_Circle);
-    this.iconService.addIconLiteral('ng-zorro:sort_circle', Sort_Circle);
+  constructor(private iconService: NzIconService, private cdr: ChangeDetectorRef,    private modal: NzModalService,
+  ) {
+    this.iconService.addIconLiteral('ng-zorro:user_circle', User_Circle)
+    this.iconService.addIconLiteral('ng-zorro:sort_circle', Sort_Circle)
   }
   ngOnInit(): void {
     this.checkForLoop();
@@ -110,8 +117,40 @@ export class HomeComponent implements OnInit {
   checkForLoop() {
     this.ListItem = Array.from({ length: this.pageSize }, (_, i) => {
       const user = this.ListUser[((this.pageNumber-1) * this.pageSize) + i];
-      console.log(user)
       return user ? user : {};
+    });
+  }
+  // Reset pagenumber Khi thay đổi page size
+  restPage(data:any){
+    if(
+      typeof data === 'number' && !isNaN(data)
+    ){
+      this.pageNumber=1
+      this.pageSize=data
+      this.checkForLoop()
+      this.cdr.detectChanges()
+      return
+    }
+    this.pageNumber=1
+    this.pageSize=10 
+  }
+    // Change Page
+  onPageChange( data:any){
+    this.checkForLoop()
+  }
+  // Mở modal  thêm mới khách hàng
+  openCustomer(){
+    const Modal = this.modal.create<ComponentComponent>({
+      nzTitle: '',
+      nzContent: ComponentComponent,
+      nzWrapClassName: "modaleCss",
+      nzData: {
+      },
+      nzStyle:{ top: '20px' },
+      nzWidth: 1200,
+      nzMaskClosable: false,
+      nzClosable: false,
+      nzFooter: null
     });
   }
 }

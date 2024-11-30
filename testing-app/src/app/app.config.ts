@@ -14,5 +14,6 @@ registerLocaleData(en);
 
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes), provideNzI18n(en_US),     provideHttpClient(withInterceptors([Interceptor])),
-  importProvidersFrom(FormsModule), provideAnimationsAsync(), provideHttpClient()]
+  importProvidersFrom(FormsModule), provideAnimationsAsync(), provideHttpClient(),
+]
 };
