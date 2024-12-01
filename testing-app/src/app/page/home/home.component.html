@@ -8,15 +8,15 @@
                 <h1 class="text-[#181B22] text-start text-[28px] mb-0 font-semibold  ">Quản lý khách hàng</h1>
             </div>
             <div class="mt-6 flex items-center gap-8">
-                <input nz-input placeholder="Tên, SDT, Email" nzSize="default" />
-                <span nz-icon nzType="ng-zorro:sort_circle" class="!text-[36px]" nzTheme="outline"></span>
+                <input nz-input placeholder="Tên, SDT, Email" nzSize="default" [(ngModel)]="data"/>
+                <span (click)="searchData(data)" nz-icon nzType="ng-zorro:sort_circle" class="!text-[36px]" nzTheme="outline"></span>
             </div>
         </div>
         <div class="w-fit  text-sm font-semibold flex flex-col items-end gap-6">
             <div class="flex flex-row-reverse gap-2">
                 <nz-avatar nzIcon="user" class="size-11" nzSrc="../../../assets/img/Rectangle 312.png"></nz-avatar>
                 <div class=" *:mb-0 *:text-right">
-                    <p>Mrs Conan</p>
+                    <p>{{userAcoutn}}</p>
                     <p>Nhân viên kinh doanh</p>
                 </div>
             </div>
@@ -49,7 +49,7 @@
                     <td class="max-w-[160px]  min-w-[100px]"><p class="line-clamp-2">{{item?.full_name||"" }}</p></td>
                     <td class="max-w-[160px] min-w-[100px]">{{item?.phone_number||"" }}</td>
                     <td class="min-w-[220px]"><p class="line-clamp-2">{{item?.email||"" }}</p></td>
-                    <td class="max-w-[160px] min-w-[120px]">{{userAcoutn||"" }}</td>
+                    <td class="max-w-[160px] min-w-[120px]">{{ item?.customer_code? userAcoutn:"" }}</td>
                     <td class="max-w-[160px] min-w-[120px]">{{item?.source?.title||"" }}</td>
                     <td class="max-w-[250px] min-w-[120px]"><p class="">{{item?.notes||"" }} </p></td>
                     <td *ngIf="item?.source?.created_at" class=" min-w-[60px] w-fit">{{item?.source?.created_at| date:"dd/MM/YYYY"     }}</td>

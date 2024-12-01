@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { AppComponent } from './app.component';
+import { authGuardFn } from '../core/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -12,6 +13,8 @@ export const routes: Routes = [
         path: '',
         loadChildren: () =>
           import('./layout/main/main.module').then((m) => m.MainModule),
+        // canActivate:[authGuardFn],
+
       },
       {
         path: 'login',
@@ -20,6 +23,14 @@ export const routes: Routes = [
             (m) => m.LoginComponent
           ),
         title: 'Đăng Nhập',
+      },
+      {
+        path: 'register',
+        loadComponent: () =>
+          import('./layout/auth/register/register.component').then(
+            (m) => m.RegisterComponent
+          ),
+        title: 'Đăng ký',
       },
       {
         path: '**',

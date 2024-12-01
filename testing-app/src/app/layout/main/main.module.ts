@@ -2,13 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { MainComponent } from './main.component';
+import { authGuardFn } from '../../../core/guards/auth.guard';
 
 
 const routes: Routes = [
   {
     path: '',
     component: MainComponent,
-    // canActivate: [AuthForceLoginGuard,AuthCheckRole],
     children: [
       {
         path: '',
@@ -17,11 +17,12 @@ const routes: Routes = [
       },
       {
         path: 'home',
-        // canActivate: [AuthForceLoginGuard,AuthCheckRole],
         loadComponent: () =>
           import(
             '../../page/home/home.component'
           ).then((m) => m.HomeComponent),
+          canActivate:[authGuardFn],
+
         title: 'Trang chủ',
       },
     ],

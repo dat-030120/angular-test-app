@@ -14,6 +14,7 @@ export class ApiService {
   constructor(private http: HttpClient) {}
 
   endpointAddress = '../../assets/config/address';
+  endpointApiConfig = 'https://dev.thabicare.zenix.com.vn/api/v1/';
 
   getCities(): Observable<any> {
     return this.http.get<City[]>(this.endpointAddress + '/cities.json');
@@ -32,5 +33,26 @@ export class ApiService {
         return wards.filter((ward) => ward.parent === districtName);
       })
     );
+  }
+  login(body:any): Observable<any> {
+    return this.http.post<any>(
+      this.endpointApiConfig + `user-login/`
+    ,body );
+  }
+  register(body:any): Observable<any> {
+    return this.http.post<any>(
+      this.endpointApiConfig + `create-user-account/`
+    ,body );
+  }
+
+  getCustomer(): Observable<any>{
+    return this.http.get<any>(
+      this.endpointApiConfig + `customers/`
+     );
+  }
+  createCustomer(body:any): Observable<any>{
+    return this.http.get<any>(
+      this.endpointApiConfig + `customers/`
+    ,body );
   }
 }

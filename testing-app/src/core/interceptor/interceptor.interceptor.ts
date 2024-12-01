@@ -24,11 +24,10 @@ export const Interceptor: HttpInterceptorFn = (request, next) => {
   } else {
     return next(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        if (error.status === 401) {
+        if (error.status === 401 && !request.url.includes('login')) {
           router.navigate(['/login']);
           localStorage.removeItem('access_token');
         }
-        
         // } else {
         //   return throwError(() => error);
         // }

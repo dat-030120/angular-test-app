@@ -10,6 +10,8 @@ import { FormsModule } from '@angular/forms';
 import {  NzModalService } from 'ng-zorro-antd/modal';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { ComponentComponent } from './component/component.component';
+import { ApiService } from '../../../core/api/api.service';
+import { NotificationService } from '../../../core/service/notification.service';
 
 @Component({
   selector: 'app-home',
@@ -19,15 +21,16 @@ import { ComponentComponent } from './component/component.component';
   styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnInit {
-  constructor(private iconService: NzIconService, private cdr: ChangeDetectorRef,    private modal: NzModalService,
-  ) {
+  constructor(private iconService: NzIconService, private cdr: ChangeDetectorRef,  private noti:NotificationService,  private modal: NzModalService,
+ private apiService: ApiService ) {
     this.iconService.addIconLiteral('ng-zorro:user_circle', User_Circle)
     this.iconService.addIconLiteral('ng-zorro:sort_circle', Sort_Circle)
   }
   ngOnInit(): void {
-    this.checkForLoop();
+    this.userAcoutn = localStorage.getItem('userName')||""
+    this.getListCustumer()
   }
-
+  data:string=''
   userAcoutn: string = '';
   pageSize: number = 10;
   ListUser: any[] = [ {
@@ -152,5 +155,36 @@ export class HomeComponent implements OnInit {
       nzClosable: false,
       nzFooter: null
     });
+  }
+  getListCustumer(){
+    this.apiService.getCustomer().subscribe({ next:(value:any)=> {
+      this.ListUser= value.results
+      this.checkForLoop();
+    },error:(err)=>{
+        this.noti.error('Hệ thống đang bị lỗi vui lòng f5 lại')
+    },})
+  }
+  
+   earchInObject(obj:any,data:string):boolean{
+       return [obj.full_name,obj.phone_number,obj.email ].some(item => {
+          console.log(item, data,obj  )
+          return     item?item.toString().includes(data):false
+       } )
+  }
+  searchData(data:string){
+    this.pageNumber=1
+    this.pageSize=20
+    if(!data){ 
+          this.checkForLoop()
+      return}
+
+    let cloneData = this.ListUser.filter( (value:any)=> {
+       let bolan =this.earchInObject(value,data)
+       return bolan})
+    this.ListItem = Array.from({ length: this.pageSize }, (_, i) => {
+      const user = cloneData[((this.pageNumber-1) * this.pageSize) + i];
+      return user ? user : {};
+    });
+    this.cdr.detectChanges()
   }
 }
