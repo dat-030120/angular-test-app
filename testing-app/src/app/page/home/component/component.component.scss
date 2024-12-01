@@ -13,7 +13,10 @@
 
      }
 
-     .ant-input ,.ant-picker,.ant-picker:hover, .ant-picker-focused{
+     .ant-input,
+     .ant-picker,
+     .ant-picker:hover,
+     .ant-picker-focused {
          height: 36px;
          padding: 10px 16px;
          line-height: 1.5;
@@ -25,34 +28,61 @@
              box-shadow: none
          }
 
-        
+
      }
-     .ant-input-affix-wrapper{
-        padding: 0 16px;
-        border-radius: 4px;
-        border-color: #828282;
 
-        &:hover {
-            border-color: #828282;
-            box-shadow: none
-        }
+     .ant-input-affix-wrapper {
+         padding: 0 16px;
+         border-radius: 4px;
+         border-color: #828282;
+
+         &:hover {
+             border-color: #828282;
+             box-shadow: none
+         }
      }
-     .ant-select,.ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
-        height: 36px;
-        width: 100%;
-        font-size: 14px;
-        padding: 0px 0px ;
 
-    }
-    .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
-        padding: 0px 5px ;
-        border-radius: 4px;
+     .ant-select,
+     .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+         height: 36px;
+         width: 100%;
+         font-size: 14px;
+         padding: 0px 0px;
 
-    }
-    .ant-select-selector {
-        border-radius: 4px;
-        border: 1px solid #D9D9D9 !important;
-        padding: 0px 10px;
-        background-color:#F5F5F5 ;
-    }
-}
+     }
+
+     .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+         padding: 0px 5px;
+         border-radius: 4px;
+
+     }
+
+     .ant-select-selector {
+         border-radius: 4px;
+         border: 1px solid #828282 !important;
+         padding: 0px 10px;
+         background-color: #F5F5F5;
+     }
+
+     .header-2 {
+         .ant-form-item {
+             margin-bottom: 0;
+         }
+     }
+
+     .timerGrup {
+         .ant-picker {
+             border: none !important;
+             /* Loại bỏ border */
+             box-shadow: none !important;
+             /* Loại bỏ box-shadow */
+         }
+
+         .ant-picker-input {
+             border: none !important;
+             /* Loại bỏ border của input */
+             box-shadow: none !important;
+             /* Loại bỏ box-shadow của input */
+         }
+     }
+ }
