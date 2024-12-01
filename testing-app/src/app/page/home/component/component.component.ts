@@ -18,6 +18,7 @@ import { ApiService } from '../../../../core/api/api.service';
 import { CommonModule } from '@angular/common';
 import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
 import { Observable, Subscription } from 'rxjs';
+import { NzModalRef,NZ_MODAL_DATA } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-component',
@@ -40,7 +41,7 @@ import { Observable, Subscription } from 'rxjs';
 })
 export class ComponentComponent implements OnInit, OnDestroy {
   constructor(
-    private modal: NzModalService,
+    private modal: NzModalRef,
     private iconService: NzIconService,
     private cdr: ChangeDetectorRef,
     private apiService: ApiService
@@ -52,16 +53,14 @@ export class ComponentComponent implements OnInit, OnDestroy {
   public cityUnchange?: Subscription;
   public districtUnchange?: Subscription;
 
-
   ngOnDestroy(): void {
     this.cityUnchange?.unsubscribe();
     this.districtUnchange?.unsubscribe();
-  
   }
   ngOnInit(): void {}
   public form: FormGroup = new FormGroup({
     source: new FormControl(null, Validators.required),
-    social_media: new FormControl(null, Validators.required),
+    social_media: new FormControl(null),
     service: new FormControl(null, Validators.required),
     status: new FormControl(null, Validators.required),
     full_name: new FormControl(null, Validators.required),
@@ -79,14 +78,33 @@ export class ComponentComponent implements OnInit, OnDestroy {
     city: new FormControl(null),
     district: new FormControl(null),
     ward: new FormControl(null),
-    detailed_info: new FormControl(null, Validators.required),
+    detailed_info: new FormControl(null),
     notes: new FormControl(null),
     email: new FormControl(null, Validators.email),
+    customer_code: new FormControl(null),
+
   });
   // List city
   Listcity: any[] = [];
   listdistrict: any[] = [];
   wardData: any[] = [];
+
+  //List comments
+  comments: any[] = [
+    {
+      id: 295,
+      title: 'string',
+      time: '2024-11-30T00:34:12.743255',
+      status_id: 1,
+      status: {
+        id: 1,
+        title: 'ok',
+        created_at: '2024-11-19T21:44:34.748363',
+        updated_at: '2024-11-19T21:44:34.748443',
+        user: 1,
+      },
+    },
+  ];
 
   searchCity() {
     this.apiService.getCities().subscribe((data: any) => {
@@ -149,7 +167,10 @@ export class ComponentComponent implements OnInit, OnDestroy {
     let follow_down_date = this.form.get('follow_down_date')?.value;
     let follow_up_date = this.form.get('follow_up_date')?.value;
     if (follow_down_date && follow_up_date) {
-      if (new Date(follow_up_date).getTime() > new Date(follow_down_date).getTime()) {
+      if (
+        new Date(follow_up_date).getTime() >
+        new Date(follow_down_date).getTime()
+      ) {
         this.form.patchValue(
           {
             follow_up_date: follow_down_date,
@@ -159,5 +180,38 @@ export class ComponentComponent implements OnInit, OnDestroy {
         );
       }
     }
+  }
+  //comments
+  addComments() {
+    this.comments.push({
+      title: '',
+      time: null,
+      status_id: 1,
+    });
+    this.cdr.detectChanges()
+  }
+
+  // đóng models
+  closeModels(){
+    this.modal.close()
+  }
+  // lưu dữ liệu
+  saveData(){
+    if(this.form.invalid){
+      Object.values(this.form.controls).forEach((controlr)=>{
+        if(controlr.invalid){
+          controlr.markAsDirty()
+          controlr.updateValueAndValidity()
+        }
+      })
+    }
+    //Danh cho update
+    let body ={... this.form.value}
+
+    if(!body.customer_code){
+      delete body.customer_code
+    }
+
+    console.log(this.form.value)
   }
 }

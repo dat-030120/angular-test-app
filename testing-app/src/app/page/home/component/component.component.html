@@ -1,24 +1,24 @@
-<div class="  ">
+<div class=" pb-4 ">
     <div class="p-4 bg-[#BD8306]  rounded-t-[10px] flex justify-between items-center ">
         <p class=" mb-0 text-[16px] font-semibold text-white">Tạo khách hàng</p>
-        <i class="fa-regular fa-rectangle-xmark fa-rotate-90 text-white text-[20px]"></i>
+        <i (click)="closeModels()" class="fa-regular fa-rectangle-xmark fa-rotate-90 text-white text-[20px]"></i>
     </div>
-    <div class=" p-6 min-h-[80vh] max-h-[120vh] overflow-hidden  overflow-y-auto bg-white rounded-b-[10px] ">
+    <div class=" p-6 min-h-[70svh] max-h-[90svh] overflow-hidden  overflow-y-auto bg-white rounded-b-[10px] ">
         <!--  form -->
-        <form [formGroup]="form" nz-form class="">
+        <form [formGroup]="form" nz-form class="" [autocomplete]="'off'">
             <div class="grid grid-cols-3 gap-x-16  items-center">
                 <nz-form-item>
                     <nz-form-label [nzSpan]="24" nzFor="full_name" class="!p-0">Họ tên khách hàng <span
                             class="text-red-600"> *</span></nz-form-label>
-                    <nz-form-control [nzSpan]="24">
+                    <nz-form-control [nzSpan]="24" [nzErrorTip]="errorcheck">
                         <input nz-input name="full_name" type="text" formControlName="full_name"
                             placeholder="Họ và tên khách hàng" id="full_name" />
                     </nz-form-control>
                 </nz-form-item>
-                <nz-form-item>
+                <nz-form-item class="mt-6">
                     <nz-form-label [nzSpan]="6" nzFor="gender" class="!p-0">Giới tính </nz-form-label>
                     <nz-form-control [nzSpan]="24">
-                        <nz-radio-group formControlName="gender"  nzName="radiogroup">
+                        <nz-radio-group formControlName="gender" nzName="radiogroup">
                             <label nz-radio nzValue="Nam">Nam</label>
                             <label nz-radio nzValue="Nữ">Nữ</label>
                             <label nz-radio nzValue="Khác">Khác</label>
@@ -36,7 +36,7 @@
                     <nz-form-item>
                         <nz-form-label [nzSpan]="24" nzFor="source" class="!p-0">Nguồn khách hàng <span
                                 class="text-red-600"> *</span></nz-form-label>
-                        <nz-form-control [nzSpan]="24">
+                        <nz-form-control [nzSpan]="24" [nzErrorTip]="errorcheck">
                             <nz-select nzShowSearch formControlName="source" class="!w-full">
                                 <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
                                 <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
@@ -44,9 +44,9 @@
                         </nz-form-control>
                     </nz-form-item>
                     <nz-form-item>
-                        <nz-form-label [nzSpan]="24" nzFor="status"  class="!p-0">Trạng thái <span class="text-red-600">
+                        <nz-form-label [nzSpan]="24" nzFor="status" class="!p-0">Trạng thái <span class="text-red-600">
                                 *</span></nz-form-label>
-                        <nz-form-control [nzSpan]="24">
+                        <nz-form-control [nzSpan]="24" [nzErrorTip]="errorcheck">
                             <nz-select nzShowSearch formControlName="status" class="!w-full">
                                 <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
                                 <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
@@ -64,28 +64,25 @@
                     <nz-form-item>
                         <nz-form-label [nzSpan]="24" nzFor="phone_number" class="!p-0">Số điện thoại <span
                                 class="text-red-600"> *</span></nz-form-label>
-                        <nz-form-control [nzSpan]="24">
+                        <nz-form-control [nzSpan]="24" [nzErrorTip]="errorcheck">
                             <nz-input-group [nzSuffix]="suffixIconSearch">
                                 <input nz-input name="phone_number" type="text" [maxlength]="10"
-                                    formControlName="phone_number" placeholder="Số điện thoại"
-                                    id="phone_number" />
+                                    formControlName="phone_number" placeholder="Số điện thoại" id="phone_number" />
                             </nz-input-group>
                         </nz-form-control>
                     </nz-form-item>
                     <nz-form-item>
-                        <nz-form-label [nzSpan]="24" nzFor="email" class="!p-0">Email <span
-                                class="text-red-600"> *</span></nz-form-label>
+                        <nz-form-label [nzSpan]="24" nzFor="email" class="!p-0">Email </nz-form-label>
                         <nz-form-control [nzSpan]="24">
-                            <input nz-input name="email" type="email" formControlName="email"
-                                placeholder="Email" id="email" />
+                            <input nz-input name="email" type="email" formControlName="email" placeholder="Email"
+                                id="email" />
                         </nz-form-control>
                     </nz-form-item>
-                   
+
                     <div class="grid grid-cols-3 header-1  gap-7">
-                        <nz-form-item >
-                            <nz-form-label [nzSpan]="24" nzFor="social_media" class="!p-0">Mạng xã hội<span
-                                    class="text-red-600"> *</span></nz-form-label>
-                            <nz-form-control [nzSpan]="24">
+                        <nz-form-item>
+                            <nz-form-label [nzSpan]="24" nzFor="social_media" class="!p-0">Mạng xã hội</nz-form-label>
+                            <nz-form-control [nzSpan]="24" >
                                 <nz-select nzShowSearch formControlName="social_media" class="!w-full">
                                     <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
                                     <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
@@ -93,9 +90,9 @@
                             </nz-form-control>
                         </nz-form-item>
                         <nz-form-item class="col-span-2">
-                            <nz-form-control [nzSpan]="24" class="mt-[32px]">
+                            <nz-form-control [nzSpan]="24" class="mt-[32px]" >
                                 <input nz-input name="detailed_info" type="text" formControlName="detailed_info"
-                                 id="detailed_info" />
+                                    id="detailed_info" />
                             </nz-form-control>
                         </nz-form-item>
                     </div>
@@ -107,105 +104,153 @@
                         </p>
                         <nz-form-item>
                             <nz-form-label [nzSpan]="24" nzFor="service" class="!p-0">Sản phẩm quan tâm<span
-                                class="text-red-600"> *</span></nz-form-label>
-                            <nz-form-control [nzSpan]="24">
-                                <nz-select   nzMode="multiple" nzShowSearch formControlName="service" class="!w-full">
+                                    class="text-red-600"> *</span></nz-form-label>
+                            <nz-form-control [nzSpan]="24" [nzErrorTip]="errorcheck">
+                                <nz-select  nzMode="multiple" nzShowSearch formControlName="service" class="!w-full">
                                     <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
                                     <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
                                 </nz-select>
                             </nz-form-control>
-                            
+
                         </nz-form-item>
                         <nz-form-item>
                             <nz-form-label [nzSpan]="24" nzFor="notes" class="!p-0">Ghi chú</nz-form-label>
                             <nz-form-control [nzSpan]="24">
                                 <input nz-input name="notes" type="text" formControlName="notes"
-                                placeholder="Họ và tên khách hàng" id="notes" />
+                                    placeholder="Họ và tên khách hàng" id="notes" />
                             </nz-form-control>
                         </nz-form-item>
                     </div>
                     <div>
                         <p class="mt-3 mb-0 text-[#000000] text-[14px] font-normal">
                             Địa chỉ liên hệ
-                        </p>  
-                        <nz-form-item >
+                        </p>
+                        <nz-form-item>
                             <nz-form-control [nzSpan]="24" class="mt-[8px]">
-                                <nz-select nzShowSearch formControlName="city"  nzPlaceHolder="Tỉnh/Thành phố" class="!w-full">
-                                    <nz-option *ngFor="let option of Listcity" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
+                                <nz-select nzShowSearch formControlName="city" nzPlaceHolder="Tỉnh/Thành phố"
+                                    class="!w-full">
+                                    <nz-option *ngFor="let option of Listcity" [nzLabel]="option.label"
+                                        [nzValue]="option.value"></nz-option>
                                 </nz-select>
                             </nz-form-control>
                         </nz-form-item>
-                        <nz-form-item >
+                        <nz-form-item>
                             <nz-form-control [nzSpan]="24" class="mt-[8px]">
-                                <nz-select nzShowSearch formControlName="district" nzPlaceHolder="Quận/Huyện" class="!w-full">
-                                    <nz-option *ngFor="let option of listdistrict" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
+                                <nz-select nzShowSearch formControlName="district" nzPlaceHolder="Quận/Huyện"
+                                    class="!w-full">
+                                    <nz-option *ngFor="let option of listdistrict" [nzLabel]="option.label"
+                                        [nzValue]="option.value"></nz-option>
                                 </nz-select>
                             </nz-form-control>
                         </nz-form-item>
-                        <nz-form-item >
+                        <nz-form-item>
                             <nz-form-control [nzSpan]="24" class="mt-[8px]">
                                 <nz-select nzShowSearch formControlName="ward" nzPlaceHolder="Phườn/Xã" class="!w-full">
-                                    <nz-option *ngFor="let option of wardData" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
+                                    <nz-option *ngFor="let option of wardData" [nzLabel]="option.label"
+                                        [nzValue]="option.value"></nz-option>
                                 </nz-select>
                             </nz-form-control>
                         </nz-form-item>
-                        <nz-form-item >
+                        <nz-form-item>
                             <nz-form-control [nzSpan]="24" class="mt-[8px]">
-                                <input nz-input name="address" type="text" formControlName="address" placeholder="Địa chỉ"
-                                 id="address" />
+                                <input nz-input name="address" type="text" formControlName="address"
+                                    placeholder="Địa chỉ" id="address" />
                             </nz-form-control>
                         </nz-form-item>
                     </div>
                     <div class="   gap-5 timerGrup">
                         <nz-form-label [nzSpan]="24" nzFor="follow_up_date" class="!p-0">Ghi chú</nz-form-label>
-                        <div class=" flex border-solid border-[#828282] border-[1px] rounded-[4px] p-[1px]" >
-                            <nz-form-item  class="w-[30%]" >
-                                <nz-form-control [nzSpan]="24" >
-                                    <nz-time-picker  (nzOpenChange)="timeCheckSwap()"	 nzPlaceHolder="--/--" nzFormat="HH:mm" formControlName="follow_up_date" 	></nz-time-picker>
+                        <div
+                            class=" flex border-solid border-[#828282] {{ (form.get('follow_down_date')?.dirty && form.get('follow_down_date')?.hasError('required'))||(form.get('follow_up_date')?.dirty && form.get('follow_up_date')?.hasError('required')) ? 'border-red-600':'border-[#828282]'}} border-[1px] rounded-[4px] p-[1px]">
+                            <nz-form-item class="w-[30%]">
+                                <nz-form-control [nzSpan]="24">
+                                    <nz-time-picker (nzOpenChange)="timeCheckSwap()" nzPlaceHolder="--/--"
+                                        nzFormat="HH:mm" formControlName="follow_up_date"></nz-time-picker>
                                 </nz-form-control>
                             </nz-form-item>
-                            <nz-form-item   class="w-[30%]" >
+                            <nz-form-item class="w-[30%]">
                                 <nz-form-control [nzSpan]="24">
-                                    <nz-time-picker  (nzOpenChange)="timeCheckSwap()" nzPlaceHolder="--/--"   nzFormat="HH:mm" formControlName="follow_down_date"></nz-time-picker>
+                                    <nz-time-picker (nzOpenChange)="timeCheckSwap()" nzPlaceHolder="--/--"
+                                        nzFormat="HH:mm" formControlName="follow_down_date"></nz-time-picker>
                                 </nz-form-control>
                             </nz-form-item>
                         </div>
-                       
+
                     </div>
                 </div>
             </div>
 
         </form>
-        <div class="max-h-[50dvh] h-fit overflow-auto rounded-md border-l border border-[#BDBDBD] border-solid my-5 ">
-            <table class="min-w-full w-fit  rounded-md">
+        <div class=" h-fit overflow-auto rounded-t-md border-l border border-[#BDBDBD] border-solid border-b-0 mt-5 ">
+            <table class="min-w-full w-fit  rounded-t-md">
                 <thead class=" sticky top-0 left-0 w-full">
-                    <tr class="   *:py-3 *:px-3  *:text-sm *:text-center *:font-medium *:bg-[#F2F2F2] *:border-solid *:border-b *:border-[#BDBDBD]">
-                        <th class="w-[15%] rounded-tl-md  ">Lần</th>
-                        <th class="w-[20%] ">Ngày</th>
-                        <th class="w-[35%]">Kết quả chăm sóc </th>
-                        <th class="w-[25%] rounded-tr-md ">Cập nhật trạng thái</th>
-                     
+                    <tr
+                        class="   *:py-3 *:px-5  *:text-sm  *:font-medium *:bg-[#F2F2F2] *:border-solid *:border-b *:border-[#BDBDBD]">
+                        <th class="w-[15%] text-center  rounded-tl-md  ">Lần</th>
+                        <th class="w-[20%] text-center  ">Ngày</th>
+                        <th class="w-[35%] text-left">Kết quả chăm sóc </th>
+                        <th class="w-[25%] text-center  rounded-tr-md ">Cập nhật trạng thái</th>
                     </tr>
                 </thead>
                 <tbody class="">
-                    
-                    <!-- <tr *ngFor="let item of ListItem ;let i=index" class=" *:text-left *:py-3 *:text-sm *:font-semibold *:px-3  *:bg-[#FFFFFF]  {{i !== ListItem.length-1 ? '*:border-solid *:border-b *:border-[#BDBDBD]': '' }} ">
-                        <td class="w-[60px] pl-3">{{(pageNumber-1)*pageSize +i+1}}</td>
-                        <td class="max-w-[160px]  min-w-[100px]">{{item?.customer_code||"" }}</td>
-                        <td class="max-w-[160px]  min-w-[100px]"><p class="line-clamp-2">{{item?.full_name||"" }}</p></td>
-                        <td class="max-w-[160px] min-w-[100px]">{{item?.phone_number||"" }}</td>
-                        <td class="min-w-[220px]"><p class="line-clamp-2">{{item?.email||"" }}</p></td>
-                        <td class="max-w-[160px] min-w-[120px]">{{userAcoutn||"" }}</td>
-                        <td class="max-w-[160px] min-w-[120px]">{{item?.source?.title||"" }}</td>
-                        <td class="max-w-[250px] min-w-[120px]"><p class="">{{item?.notes||"" }} </p></td>
-                        <td *ngIf="item?.source?.created_at" class=" min-w-[60px] w-fit">{{item?.source?.created_at| date:"dd/MM/YYYY"     }}</td>
-                        <td *ngIf="!item?.source?.created_at" class=" min-w-[60px] w-fit"></td>
-                    </tr> -->
+                    <tr *ngFor="let item of comments ;let i=index"
+                        class="   *:py-3 *:px-5  *:text-sm *:text-center *:font-normal *:bg-[#FFFFFF]   {{i !== comments.length-1 ? '*:border-solid *:border-b *:border-[#BDBDBD]': '' }} ">
+                        <td class="w-[15%] rounded-tl-md  ">{{1+i}}</td>
+                        <td class="w-[20%] ">
+                            <div class="flex justify-center items-center ">
+                                <nz-date-picker class="w-[80%] " [(ngModel)]="item.time"
+                                    nzFormat="dd/MM/YYYY"></nz-date-picker>
+                            </div>
+                        </td>
+                        <td class="w-[35%]">
+                            <input nz-input name="detailed_info" type="text" [(ngModel)]="item.title"
+                                id="detailed_info" />
+                        </td>
+                        <td class="w-[25%] rounded-tr-md ">
+                            <nz-select nzShowSearch [(ngModel)]="item.status_id" nzPlaceHolder="Trạng thái"
+                                class="!w-full">
+                                <nz-option *ngFor="let option of listdistrict" [nzLabel]="option.label"
+                                    [nzValue]="option.value"></nz-option>
+                            </nz-select>
+                        </td>
+
+                    </tr>
                 </tbody>
             </table>
         </div>
+        <div class="w-full border-dashed border-[1px] border-[#BDBDBD] flex justify-center items-center h-14">
+            <div class="flex w-fit text-[16px] text-[#BD8306] font-normal cursor-pointer" (click)="addComments()">
+                <span nz-icon nzType="plus-circle" class="text-[24px] text-[#BD8306]" nzTheme="outline"></span>
+                <span class="cursor-pointer ml-2">Thêm</span>
+            </div>
+        </div>
+
+    </div>
+    <div
+        class="mt-8 h-14 pr-20  flex justify-end items-center bg-[#FAFAFA] border-[#BDBDBD] border-solid border-y-[1px]  ">
+        <div class=" cursor-pointer rounded-lg py-1 px-3 w-fit bg-[#FAFAFA] ">
+            <span (click)="closeModels()" class="text-[#BD8306] ">Hủy</span>
+        </div>
+        <div (click)="saveData()" class="  cursor-pointer rounded-lg py-1 px-4 w-fit bg-[#BD8306] ">
+            <span class="text-white ">Xác nhận</span>
+        </div>
+
     </div>
 </div>
+
 <ng-template #suffixIconSearch>
-    <span nz-icon nzType="search"></span>
+    <span>{{10-(form.value.phone_number?form.value.phone_number.length:0)}}/10 </span>
+</ng-template>
+
+<ng-template #errorcheck let-control>
+    <ng-container *ngIf="control.hasError('required')">
+        Trường này không được để trống
+    </ng-container>
+    <ng-container *ngIf="control.hasError('email')">
+        Phải đúng định đạng email
+    </ng-container>
+    <ng-container *ngIf="control.hasError('pattern')">
+        Phải đúng định đạng số điện thoại
+    </ng-container>
+
 </ng-template>

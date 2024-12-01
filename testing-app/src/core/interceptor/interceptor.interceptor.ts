@@ -32,8 +32,8 @@ export const Interceptor: HttpInterceptorFn = (request, next) => {
         // } else {
         //   return throwError(() => error);
         // }
-        router.navigate(['/login']);
-        localStorage.removeItem('access_token');
+        // router.navigate(['/login']);
+        // localStorage.removeItem('access_token');
         return throwError(() => error);
       })
     );
