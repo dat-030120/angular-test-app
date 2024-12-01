@@ -12,7 +12,7 @@
          /* Thay đổi padding-bottom */
 
      }
-
+  
      .ant-input,
      .ant-picker,
      .ant-picker:hover,
@@ -71,18 +71,16 @@
      }
 
      .timerGrup {
-         .ant-picker {
+         .ant-picker ,  .ant-picker-input{
              border: none !important;
-             /* Loại bỏ border */
              box-shadow: none !important;
-             /* Loại bỏ box-shadow */
          }
 
-         .ant-picker-input {
-             border: none !important;
-             /* Loại bỏ border của input */
-             box-shadow: none !important;
-             /* Loại bỏ box-shadow của input */
-         }
+   
+     }
+     .container  .ant-input{
+        height: 20px;
+         padding: 5px 10px;
+         width: 50%;
      }
  }

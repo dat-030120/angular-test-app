@@ -29,8 +29,8 @@
     <div class="max-h-[61.95dvh] h-fit overflow-auto rounded-md border-l border border-[#BDBDBD] border-solid my-5 ">
         <table class="min-w-full w-fit  rounded-md">
             <thead class=" sticky top-0 left-0 w-full">
-                <tr class="  *:text-left *:py-3 *:px-3  *:text-sm *:font-bold *:bg-[#F2F2F2] *:border-solid *:border-b *:border-[#BDBDBD]">
-                    <th class="w-[60px] rounded-tl-md pl-3 ">#</th>
+                <tr  class="  *:text-left *:py-3 *:px-3  *:text-sm *:font-bold *:bg-[#F2F2F2] *:border-solid *:border-b *:border-[#BDBDBD]">
+                    <th   class="w-[60px] rounded-tl-md pl-3 ">#</th>
                     <th class="max-w-[160px]  min-w-[100px]">Mã KH</th>
                     <th class="max-w-[160px]  min-w-[100px]">Họ và tên </th>
                     <th class="max-w-[160px] min-w-[100px]">SĐT</th>
@@ -45,7 +45,7 @@
                 
                 <tr *ngFor="let item of ListItem ;let i=index" class=" *:text-left *:py-3 *:text-sm *:font-semibold *:px-3  *:bg-[#FFFFFF]  {{i !== ListItem.length-1 ? '*:border-solid *:border-b *:border-[#BDBDBD]': '' }} ">
                     <td class="w-[60px] pl-3">{{(pageNumber-1)*pageSize +i+1}}</td>
-                    <td class="max-w-[160px]  min-w-[100px]">{{item?.customer_code||"" }}</td>
+                    <td (click)="openCustomer(item)"  class="max-w-[160px] hover:underline min-w-[100px]">{{item?.customer_code||"" }}</td>
                     <td class="max-w-[160px]  min-w-[100px]"><p class="line-clamp-2">{{item?.full_name||"" }}</p></td>
                     <td class="max-w-[160px] min-w-[100px]">{{item?.phone_number||"" }}</td>
                     <td class="min-w-[220px]"><p class="line-clamp-2">{{item?.email||"" }}</p></td>

@@ -142,12 +142,13 @@ export class HomeComponent implements OnInit {
     this.checkForLoop()
   }
   // Mở modal  thêm mới khách hàng
-  openCustomer(){
+  openCustomer(data: any=undefined){
     const Modal = this.modal.create<ComponentComponent>({
       nzTitle: '',
       nzContent: ComponentComponent,
       nzWrapClassName: "modaleCss",
       nzData: {
+        data:data
       },
       nzStyle:{ top: '20px' },
       nzWidth: 1200,
@@ -155,6 +156,8 @@ export class HomeComponent implements OnInit {
       nzClosable: false,
       nzFooter: null
     });
+    Modal.afterClose.subscribe(result =>this.getListCustumer() );
+
   }
   getListCustumer(){
     this.apiService.getCustomer().subscribe({ next:(value:any)=> {
@@ -167,7 +170,6 @@ export class HomeComponent implements OnInit {
   
    earchInObject(obj:any,data:string):boolean{
        return [obj.full_name,obj.phone_number,obj.email ].some(item => {
-          console.log(item, data,obj  )
           return     item?item.toString().includes(data):false
        } )
   }

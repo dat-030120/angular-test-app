@@ -37,10 +37,21 @@
                         <nz-form-label [nzSpan]="24" nzFor="source" class="!p-0">Nguồn khách hàng <span
                                 class="text-red-600"> *</span></nz-form-label>
                         <nz-form-control [nzSpan]="24" [nzErrorTip]="errorcheck">
-                            <nz-select nzShowSearch formControlName="source" class="!w-full">
-                                <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
-                                <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
+                            <nz-select nzShowSearch formControlName="source" class="!w-full"
+                                [nzDropdownRender]="renderCreateSource">
+                                <nz-option *ngFor="let option of listSource,let i=index" [nzLabel]="option.title"
+                                    [nzValue]="option.id"></nz-option>
                             </nz-select>
+                            <ng-template #renderCreateSource>
+                                <hr class="my-2">
+                                <div class="container">
+                                    <input type="text" nz-input #inputElement />
+                                    <a class="add-item" (click)="addSource(inputElement)">
+                                        <span nz-icon nzType="plus"></span>
+                                        Thêm
+                                    </a>
+                                </div>
+                            </ng-template>
                         </nz-form-control>
                     </nz-form-item>
                     <nz-form-item>
@@ -48,8 +59,8 @@
                                 *</span></nz-form-label>
                         <nz-form-control [nzSpan]="24" [nzErrorTip]="errorcheck">
                             <nz-select nzShowSearch formControlName="status" class="!w-full">
-                                <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
-                                <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
+                                <nz-option *ngFor="let option of listStatus,let i=index" [nzLabel]="option.status"
+                                    [nzValue]="i"></nz-option>
                             </nz-select>
                         </nz-form-control>
                     </nz-form-item>
@@ -82,15 +93,26 @@
                     <div class="grid grid-cols-3 header-1  gap-7">
                         <nz-form-item>
                             <nz-form-label [nzSpan]="24" nzFor="social_media" class="!p-0">Mạng xã hội</nz-form-label>
-                            <nz-form-control [nzSpan]="24" >
-                                <nz-select nzShowSearch formControlName="social_media" class="!w-full">
-                                    <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
-                                    <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
+                            <nz-form-control [nzSpan]="24">
+                                <nz-select nzShowSearch formControlName="social_media" class="!w-full"
+                                    [nzDropdownRender]="renderCreateSocial">
+                                    <nz-option *ngFor="let option of listSocial,let i=index" [nzLabel]="option.title"
+                                        [nzValue]="option.id"></nz-option>
                                 </nz-select>
+                                <ng-template #renderCreateSocial>
+                                    <hr class="my-2">
+                                    <div class="container">
+                                        <input type="text" nz-input #inputElement2 />
+                                        <a class="add-item text-[10px]" (click)="addSocial(inputElement2)">
+                                            <span nz-icon nzType="plus"></span>
+                                            Thêm
+                                        </a>
+                                    </div>
+                                </ng-template>
                             </nz-form-control>
                         </nz-form-item>
                         <nz-form-item class="col-span-2">
-                            <nz-form-control [nzSpan]="24" class="mt-[32px]" >
+                            <nz-form-control [nzSpan]="24" class="mt-[32px]">
                                 <input nz-input name="detailed_info" type="text" formControlName="detailed_info"
                                     id="detailed_info" />
                             </nz-form-control>
@@ -106,12 +128,22 @@
                             <nz-form-label [nzSpan]="24" nzFor="service" class="!p-0">Sản phẩm quan tâm<span
                                     class="text-red-600"> *</span></nz-form-label>
                             <nz-form-control [nzSpan]="24" [nzErrorTip]="errorcheck">
-                                <nz-select  nzMode="multiple" nzShowSearch formControlName="service" class="!w-full">
-                                    <nz-option nzValue="jack" nzLabel="Jack"></nz-option>
-                                    <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
+                                <nz-select nzMode="multiple" nzShowSearch formControlName="service" class="!w-full"
+                                    [nzDropdownRender]="renderCreateServices">
+                                    <nz-option *ngFor="let option of listServices,let i=index" [nzLabel]="option.title"
+                                        [nzValue]="option.id"></nz-option>
                                 </nz-select>
                             </nz-form-control>
-
+                            <ng-template #renderCreateServices>
+                                <hr class="my-2">
+                                <div class="container">
+                                    <input type="text" nz-input #inputElement3 />
+                                    <a class="add-item text-[10px]" (click)="addServices(inputElement3)">
+                                        <span nz-icon nzType="plus"></span>
+                                        Thêm
+                                    </a>
+                                </div>
+                            </ng-template>
                         </nz-form-item>
                         <nz-form-item>
                             <nz-form-label [nzSpan]="24" nzFor="notes" class="!p-0">Ghi chú</nz-form-label>
@@ -174,7 +206,12 @@
                                         nzFormat="HH:mm" formControlName="follow_down_date"></nz-time-picker>
                                 </nz-form-control>
                             </nz-form-item>
+
                         </div>
+                        <p class="text-red-600"
+                            *ngIf="(form.get('follow_down_date')?.dirty && form.get('follow_down_date')?.hasError('required'))||(form.get('follow_up_date')?.dirty && form.get('follow_up_date')?.hasError('required'))">
+                            Phải nhập thời gian bắt đầu và kết thúc
+                        </p>
 
                     </div>
                 </div>
@@ -209,8 +246,8 @@
                         <td class="w-[25%] rounded-tr-md ">
                             <nz-select nzShowSearch [(ngModel)]="item.status_id" nzPlaceHolder="Trạng thái"
                                 class="!w-full">
-                                <nz-option *ngFor="let option of listdistrict" [nzLabel]="option.label"
-                                    [nzValue]="option.value"></nz-option>
+                                <nz-option *ngFor="let option of listStatus,let i=index" [nzLabel]="option.status"
+                                    [nzValue]="i"></nz-option>
                             </nz-select>
                         </td>
 

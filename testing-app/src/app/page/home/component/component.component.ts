@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { NzIconModule, NzIconService } from 'ng-zorro-antd/icon';
 import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
 import { Delete } from '../../../../assets/icon/icon';
@@ -17,8 +17,10 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { ApiService } from '../../../../core/api/api.service';
 import { CommonModule } from '@angular/common';
 import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, map } from 'rxjs';
 import { NzModalRef,NZ_MODAL_DATA } from 'ng-zorro-antd/modal';
+import { NotificationService } from '../../../../core/service/notification.service';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
 
 @Component({
   selector: 'app-component',
@@ -35,16 +37,20 @@ import { NzModalRef,NZ_MODAL_DATA } from 'ng-zorro-antd/modal';
     NzSelectModule,
     CommonModule,
     NzTimePickerModule,
+    NzDividerModule
   ],
   templateUrl: './component.component.html',
   styleUrl: './component.component.scss',
 })
 export class ComponentComponent implements OnInit, OnDestroy {
+  readonly nzModalData: any = inject(NZ_MODAL_DATA);
+
   constructor(
     private modal: NzModalRef,
     private iconService: NzIconService,
     private cdr: ChangeDetectorRef,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private noti: NotificationService
   ) {
     this.iconService.addIconLiteral('ng-zorro:delete', Delete);
     this.searchCity();
@@ -57,7 +63,48 @@ export class ComponentComponent implements OnInit, OnDestroy {
     this.cityUnchange?.unsubscribe();
     this.districtUnchange?.unsubscribe();
   }
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getListStatus()
+    this.getListSource()
+    this.getListSocial()
+    this.getListServices()
+    // xử lý khi edit
+    
+      if(this.nzModalData.data){
+        let data = this.nzModalData.data
+        let service =this.nzModalData.data.service.map((value:any)=> value.id)
+        
+        this.form.patchValue({
+          source: data.source.id,
+    social_media:data.social_media.id,
+    service: [...service] ,
+    status: data.status.id,
+    full_name:  data.full_name,
+    gender:  data.gender,
+    date_of_birth: data.date_of_birth,
+    phone_number:  data.phone_number,
+    follow_up_date: data.follow_up_date,
+    follow_down_date: data.follow_down_date,
+    address: data.address,
+    detailed_info: data.detailed_info||undefined,
+    notes: data.notes,
+    email: data.email,
+    customer_code: data.customer_code,
+        })
+
+        this.form.patchValue({
+          city: data.city,
+          district: data.district,
+          ward: data.ward,
+        },{emitEvent:false})
+        setTimeout(()=>{     this.getAllDistricts(data.city)
+          this.getAllWards(data.district)
+ } ,200)
+        this.comments =[...data.comment]
+      }
+    
+
+  }
   public form: FormGroup = new FormGroup({
     source: new FormControl(null, Validators.required),
     social_media: new FormControl(null),
@@ -88,22 +135,19 @@ export class ComponentComponent implements OnInit, OnDestroy {
   Listcity: any[] = [];
   listdistrict: any[] = [];
   wardData: any[] = [];
+  listStatus:any[]=[]
+  listSource:any[]=[]
+  listSocial:any[]=[]
+  listServices:any[]=[]
 
+
+  //kiểm danh sách các vị trí lỗi
+  listError:any[]=[]
+  // api trả về cá status lỗi
+  listErrorCheckAPi:any[]=[]
   //List comments
   comments: any[] = [
-    {
-      id: 295,
-      title: 'string',
-      time: '2024-11-30T00:34:12.743255',
-      status_id: 1,
-      status: {
-        id: 1,
-        title: 'ok',
-        created_at: '2024-11-19T21:44:34.748363',
-        updated_at: '2024-11-19T21:44:34.748443',
-        user: 1,
-      },
-    },
+   
   ];
 
   searchCity() {
@@ -205,13 +249,104 @@ export class ComponentComponent implements OnInit, OnDestroy {
         }
       })
     }
+    let body ={... this.form.value,comments:this.comments}
     //Danh cho update
-    let body ={... this.form.value}
 
     if(!body.customer_code){
       delete body.customer_code
     }
-
+    this.apiService.createCustomer(body).subscribe({next:(value) =>{
+        this.noti.success('Thành công')
+        this.modal.close()
+    },error:(err)=> {
+      
+    },})
     console.log(this.form.value)
   }
+  // get list Status
+  getListStatus(){
+    this.apiService.getListStatus().subscribe({
+      next:(value) =>{
+        this.listStatus = value
+      },
+      error:(err)=> {
+        this.noti.error('Hệ thống đang gặp lỗi vui lòng f5')
+      },
+    })
+  }
+  // get List Source
+  getListSource(){
+    this.apiService.getListSource().subscribe({
+      next:(value) =>{
+        this.listSource = value.results
+      },
+      error:(err)=> {
+        this.noti.error('Hệ thống đang gặp lỗi vui lòng f5')
+      },
+    })
+  }
+    // add Source
+
+  addSource(input: HTMLInputElement){
+    const value = input.value;
+
+    this.apiService.createSource({title:value.toString() }).subscribe({
+      next:(value) =>{
+        this.listSource.push(value)
+      },
+      error:(err)=> {
+        this.noti.error('Vui lòng thử lại')
+      },
+    })
+  }
+   // get List Source
+   getListSocial(){
+    this.apiService.getListSocial().subscribe({
+      next:(value) =>{
+        this.listSocial = value.results
+      },
+      error:(err)=> {
+        this.noti.error('Hệ thống đang gặp lỗi vui lòng f5')
+      },
+    })
+  }
+    // add Source
+
+  addSocial(input: HTMLInputElement){
+    const value = input.value;
+
+    this.apiService.createSocial({title:value.toString() }).subscribe({
+      next:(value) =>{
+        this.listSocial.push(value)
+      },
+      error:(err)=> {
+        this.noti.error('Vui lòng thử lại')
+      },
+    })
+  }
+     // get List Services
+     getListServices(){
+      this.apiService.getListServices().subscribe({
+        next:(value) =>{
+          this.listServices = value.results
+        },
+        error:(err)=> {
+          this.noti.error('Hệ thống đang gặp lỗi vui lòng f5')
+        },
+      })
+    }
+      // add Source
+  
+    addServices(input: HTMLInputElement){
+      const value = input.value;
+  
+      this.apiService.createServices({title:value.toString() }).subscribe({
+        next:(value) =>{
+          this.listServices.push(value)
+        },
+        error:(err)=> {
+          this.noti.error('Vui lòng thử lại')
+        },
+      })
+    }
 }

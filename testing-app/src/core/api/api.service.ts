@@ -51,8 +51,44 @@ export class ApiService {
      );
   }
   createCustomer(body:any): Observable<any>{
-    return this.http.get<any>(
+    return this.http.post<any>(
       this.endpointApiConfig + `customers/`
     ,body );
   }
+  getListStatus(): Observable<any>{
+    return this.http.get<any>(
+      this.endpointApiConfig + `customer-status/`
+     );
+  }
+  getListSource(): Observable<any>{
+    return this.http.get<any>(
+      this.endpointApiConfig + `customer-source/`
+     );
+  }
+  createSource(body:any): Observable<any>{
+    return this.http.post<any>(
+      this.endpointApiConfig + `customer-source/`
+    ,body );
+  }
+  getListSocial(): Observable<any>{
+    return this.http.get<any>(
+      this.endpointApiConfig + `customer-social/`
+     );
+  }
+  createSocial(body:any): Observable<any>{
+    return this.http.post<any>(
+      this.endpointApiConfig + `customer-social/`
+    ,body );
+  }
+  getListServices(): Observable<any>{
+    return this.http.get<any>(
+      this.endpointApiConfig + `services/`
+     );
+  }
+  createServices(body:any): Observable<any>{
+    return this.http.post<any>(
+      this.endpointApiConfig + `services/`
+    ,body );
+  }
+  
 }
